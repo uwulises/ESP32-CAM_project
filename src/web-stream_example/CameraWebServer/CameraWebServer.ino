@@ -33,8 +33,8 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char* ssid = "**********";
-const char* password = "**********";
+const char* ssid = "ESP32-CAM Access Point";
+const char* password = "123456789";
 
 void startCameraServer();
 
@@ -124,15 +124,7 @@ void setup() {
   s->set_vflip(s, 1);
 #endif
 
-  WiFi.begin(ssid, password);
-  WiFi.setSleep(false);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.println("WiFi connected");
+  WiFi.softAP(ssid, password);
 
   startCameraServer();
 
