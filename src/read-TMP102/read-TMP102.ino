@@ -8,26 +8,24 @@
 #define I2C_SDA 14 // SDA Connected to GPIO 14
 #define I2C_SCL 15 // SCL Connected to GPIO 15
 
-const int ALERT_PIN = 4;
 TMP102 sensor0;
 
 void setup() {
   Serial.begin(115200);
   Wire.begin(I2C_SDA, I2C_SCL);
-  pinMode(ALERT_PIN,INPUT);  // Declare alertPin as an input
   /* The TMP102 uses the default settings with the address 0x48 using Wire.
      It will return true on success or false on failure to communicate. */
-  if(!sensor0.begin(0x48))
+  if (!sensor0.begin(0x48))
   {
     Serial.println("Cannot connect to TMP102.");
     Serial.println("Is the board connected? Is the device ID correct?");
-    while(1);
+    while (1);
   }
 
   Serial.println("Connected to TMP102!");
   delay(100);
 
-   // Initialize sensor0 settings
+  // Initialize sensor0 settings
   // These settings are saved in the sensor, even if it loses power
 
   // set the number of consecutive faults before triggering alarm.
@@ -48,14 +46,6 @@ void setup() {
   //0:12-bit Temperature(-55C to +128C) 1:13-bit Temperature(-55C to +150C)
   sensor0.setExtendedMode(0);
 
-  //set T_HIGH, the upper limit to trigger the alert on
-  //sensor0.setHighTempF(82.0);  // set T_HIGH in F
-  sensor0.setHighTempC(29.4); // set T_HIGH in C
-
-  //set T_LOW, the lower limit to shut turn off the alert
-  //sensor0.setLowTempF(81.0);  // set T_LOW in F
-  sensor0.setLowTempC(26.67); // set T_LOW in C
-
 }
 
 void loop()
@@ -68,7 +58,6 @@ void loop()
   sensor0.wakeup();
 
   // read temperature data
-  
   temperature = sensor0.readTempC();
 
   // Place sensor in sleep mode to save power.
@@ -79,5 +68,5 @@ void loop()
   Serial.print("Temperature: ");
   Serial.println(temperature);
   delay(1000);  // Wait 1000ms
-  
+
 }
