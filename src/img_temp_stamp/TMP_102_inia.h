@@ -28,7 +28,7 @@ void I2C_TMP102() {
   }
 
   Serial.println("Connected to TMP102!");
-  delay(100);
+  delay(1000);
 
   // Initialize sensor0 settings
   // These settings are saved in the sensor, even if it loses power

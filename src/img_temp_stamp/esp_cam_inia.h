@@ -12,8 +12,11 @@
 #include "FS.h"
 #include "SD_MMC.h"
 
+// EEPROM Library
+#include "EEPROM.h"
+
 // Use 1 byte of EEPROM space
-//#define EEPROM_SIZE 1
+#define EEPROM_SIZE 1
 
 // Pin definitions for CAMERA_MODEL_AI_THINKER
 #define PWDN_GPIO_NUM     32
