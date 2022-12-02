@@ -11,6 +11,7 @@
 #define I2C_SCL 15 // SCL Connected to GPIO 15
 
 float temperature;
+int temp_without_dot;
 boolean alertPinState, alertRegisterState;
 
 TMP102 sensor0;
@@ -28,7 +29,7 @@ void I2C_TMP102() {
   }
 
   Serial.println("Connected to TMP102!");
-  delay(1000);
+  delay(100);
 
   // Initialize sensor0 settings
   // These settings are saved in the sensor, even if it loses power
@@ -45,7 +46,7 @@ void I2C_TMP102() {
 
   // set the Conversion Rate (how quickly the sensor gets a new reading)
   //0-3: 0:0.25Hz, 1:1Hz, 2:4Hz, 3:8Hz
-  sensor0.setConversionRate(0);
+  sensor0.setConversionRate(1);
 
   //set Extended Mode.
   //0:12-bit Temperature(-55C to +128C) 1:13-bit Temperature(-55C to +150C)
@@ -58,16 +59,17 @@ void temp_stamp() {
   // Turn sensor on to start temperature measurement.
   // Current consumtion typically ~10uA.
   sensor0.wakeup();
-
+  delay(100);
   // read temperature data
   temperature = sensor0.readTempC();
+  temp_without_dot=temperature*100;
 
   // Place sensor in sleep mode to save power.
   // Current consumtion typically <0.5uA.
   sensor0.sleep();
 
   // Print temperature and alarm state
-  Serial.print("Temperature: ");
+  Serial.print("Temperatura: ");
   Serial.println(temperature);
   delay(1000);  // Wait 1000ms
 
